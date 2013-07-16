@@ -603,7 +603,14 @@ BOOL RKObjectIsValueEqualToValue(id sourceValue, id destinationValue) {
                 objectMapping = (RKObjectMapping *)mapping;
             }
             NSAssert(objectMapping, @"Encountered unknown mapping type '%@'", NSStringFromClass([mapping class]));
+            id destinationCandidate = [self.destinationObject valueForKeyPath:relationshipMapping.destinationKeyPath];
+
+            
             destinationObject = [objectMapping mappableObjectForData:value];
+            if ( destinationCandidate && [destinationCandidate isKindOfClass:[destinationObject class]]){
+                destinationObject = destinationCandidate;
+            } else if (![destinationCandidate isKindOfClass:[destinationObject class]]){
+            }
             if ([self mapNestedObject:value toObject:destinationObject withRealtionshipMapping:relationshipMapping]) {
                 appliedMappings = YES;
             }
