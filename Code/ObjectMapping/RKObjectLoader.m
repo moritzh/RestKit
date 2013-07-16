@@ -224,6 +224,11 @@
     mapper.targetObject = targetObject;
     mapper.delegate = self;
     mapper.context = context;
+    
+    if ( [self.response.request.URL.absoluteString rangeOfString:@"orders"].location != NSNotFound){
+        NSLog(@"GOTCHA");
+    }
+    
     RKObjectMappingResult *result = [mapper performMapping];
 
     // Log any mapping errors
